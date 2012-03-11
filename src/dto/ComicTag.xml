@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="ComicTag">
+	<select id="getComicTags" parameterClass="java.util.HashMap" resultClass="dto.ComicTag">
+		SELECT
+		comic_id as comicId,
+		tags as tags
+		FROM comic_tag
+		WHERE comic_id BETWEEN  #start# AND #end#
+	</select>
+
+	<select id="getComicTag" parameterClass="Integer" resultClass="dto.ComicTag">
+		SELECT
+		comic_id as comicId,
+		tags as tags
+		FROM comic_tag
+		WHERE comic_id = #value#
+	</select>
+
+	<update id="updateComicTag" parameterClass="dto.ComicTag">
+		UPDATE
+		comic_tag
+		SET tags = #tags#
+		WHERE comic_id = #comicId#
+	</update>
+
+	<select id="searchComicTag" parameterClass="Integer" resultClass="dto.ComicTag">
+		SELECT
+		comic_id as comicId,
+		tags as tags
+		FROM comic_tag
+		WHERE tags = #value#
+	</select>
+
+</sqlMap>

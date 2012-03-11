@@ -1,0 +1,28 @@
+<!DOCTYPE sqlMap
+PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="ComicMaster">
+	<!--
+		引数のcomicIdに該当する、ＩＤ、タイトル、タグの情報を取り出します
+	-->
+	<select id="getComicMasterAndComicTag" parameterClass="HashMap" resultClass="dto.ComicMasterAndComicTag">
+		SELECT
+		comicmaster.comic_id as comicId,
+		title as title,
+		tags as tags
+		FROM comicmaster
+		INNER JOIN comic_tag
+		ON comic_tag.comic_id = comicmaster.comic_id
+		WHERE comicmaster.comic_id BETWEEN  #start# AND #end#
+	</select>
+
+	<select id="searchComicMasterAndComicTag" parameterClass="HashMap" resultClass="dto.ComicMasterAndComicTag">
+		SELECT cmaster.comic_id as comicId,tags as tags,title as title FROM comic_tag as ctag
+		INNER JOIN comicmaster as cmaster
+		ON ctag.comic_id = cmaster.comic_id
+		WHERE tags LIKE #searchWord# OR title LIKE #searchWord#
+		ORDER BY comicId DESC
+		LIMIT #startIndex#,#showDataNum#
+	</select>
+
+</sqlMap>
